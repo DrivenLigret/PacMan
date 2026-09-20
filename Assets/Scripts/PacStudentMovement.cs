@@ -23,10 +23,8 @@ public class PacStudentMovement : MonoBehaviour
     {
         speed = Mathf.Max(0.1f, speed);
         transform.position = corners[0];
-        if (animator != null)
-        {
-            animator.Play(animations[0]);
-        }
+        animator.SetBool("Preview", false);
+        animator.Play(animations[0]);
         movingAudio.clip = movingClip;
         movingAudio.loop = true;
         movingAudio.Play();
@@ -44,10 +42,7 @@ public class PacStudentMovement : MonoBehaviour
             corner = next;
             next = (corner + 1) % corners.Length;
             length = Vector3.Distance(corners[corner], corners[next]);
-            if (animator != null)
-            {
-                animator.Play(animations[corner], 0, 0f);
-            }
+            animator.Play(animations[corner], 0, 0f);
         }
 
         transform.position = Vector3.Lerp(corners[corner], corners[next], distance / length);
