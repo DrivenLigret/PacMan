@@ -3,6 +3,7 @@ using UnityEngine;
 public class PacStudentMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
+    [SerializeField] private Animator animator;
     [SerializeField] private AudioSource movingAudio;
     [SerializeField] private AudioClip movingClip;
 
@@ -21,6 +22,10 @@ public class PacStudentMovement : MonoBehaviour
     {
         speed = Mathf.Max(0.1f, speed);
         transform.position = corners[0];
+        if (animator != null)
+        {
+            animator.Play("WalkUp");
+        }
         movingAudio.clip = movingClip;
         movingAudio.loop = true;
         movingAudio.Play();
@@ -38,6 +43,10 @@ public class PacStudentMovement : MonoBehaviour
             corner = next;
             next = (corner + 1) % corners.Length;
             length = Vector3.Distance(corners[corner], corners[next]);
+            if (animator != null && corners[next].y != corners[corner].y)
+            {
+                animator.Play(corners[next].y > corners[corner].y ? "WalkUp" : "WalkDown");
+            }
         }
 
         transform.position = Vector3.Lerp(corners[corner], corners[next], distance / length);
