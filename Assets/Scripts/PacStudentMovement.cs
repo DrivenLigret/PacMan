@@ -15,6 +15,7 @@ public class PacStudentMovement : MonoBehaviour
         new Vector3(1f, -5f, 0f)
     };
 
+    private string[] animations = { "WalkRight", "WalkDown", "WalkLeft", "WalkUp" };
     private int corner;
     private float distance;
 
@@ -24,7 +25,7 @@ public class PacStudentMovement : MonoBehaviour
         transform.position = corners[0];
         if (animator != null)
         {
-            animator.Play("WalkUp");
+            animator.Play(animations[0]);
         }
         movingAudio.clip = movingClip;
         movingAudio.loop = true;
@@ -43,9 +44,9 @@ public class PacStudentMovement : MonoBehaviour
             corner = next;
             next = (corner + 1) % corners.Length;
             length = Vector3.Distance(corners[corner], corners[next]);
-            if (animator != null && corners[next].y != corners[corner].y)
+            if (animator != null)
             {
-                animator.Play(corners[next].y > corners[corner].y ? "WalkUp" : "WalkDown");
+                animator.Play(animations[corner], 0, 0f);
             }
         }
 
