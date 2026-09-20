@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PacStudentMovement : MonoBehaviour
+public class PacManMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
     [SerializeField] private Animator animator;

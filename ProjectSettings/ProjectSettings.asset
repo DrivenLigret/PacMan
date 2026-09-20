@@ -6,7 +6,7 @@ PlayerSettings:
   serializedVersion: 28
   productGUID: e1d30974498b004f91cb80ad81e741da
   companyName: Student
-  productName: PacStudent
+  productName: PacMan
   defaultScreenWidth: 720
   defaultScreenHeight: 800
   defaultIsNativeResolution: 0
