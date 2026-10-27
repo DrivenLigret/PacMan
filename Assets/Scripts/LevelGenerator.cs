@@ -30,6 +30,19 @@ public class LevelGenerator : MonoBehaviour
     private int[] rowStep = { -1, 0, 1, 0 };
     private int[] columnStep = { 0, 1, 0, -1 };
 
+    public int Width => levelMap.GetLength(1) * 2;
+    public int Height => levelMap.GetLength(0) * 2 - 1;
+
+    public int GetTile(Vector2Int position)
+    {
+        int row = -position.y;
+        int column = position.x;
+        if (row < 0 || row >= Height || column < 0 || column >= Width) return -1;
+        int sourceRow = row < levelMap.GetLength(0) ? row : Height - 1 - row;
+        int sourceColumn = column < levelMap.GetLength(1) ? column : Width - 1 - column;
+        return levelMap[sourceRow, sourceColumn];
+    }
+
     private void Start()
     {
         manualLevel.SetActive(false);
