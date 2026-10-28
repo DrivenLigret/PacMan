@@ -84,16 +84,28 @@ public class GameSession : MonoBehaviour
         foreach (GhostStatus ghost in ghosts)
         {
             if (ghost.CurrentState == GhostStatus.State.Dead || DistanceToSegment(ghost.transform.position, from, to) >= .55f) continue;
-            if (ghost.CurrentState == GhostStatus.State.Normal)
-            {
-                StartCoroutine(LoseLife());
-                return;
-            }
-            ghost.Die();
-            effects.PlayOneShot(ghostClip);
-            AddScore(300);
-            RefreshMusic();
+            CollideWithGhost(ghost);
+            if (!IsPlaying) return;
         }
+    }
+
+    public void CheckGhostPath(GhostStatus ghost, Vector3 from, Vector3 to)
+    {
+        if (IsPlaying && ghost.CurrentState != GhostStatus.State.Dead && DistanceToSegment(player.transform.position, from, to) < .55f)
+            CollideWithGhost(ghost);
+    }
+
+    private void CollideWithGhost(GhostStatus ghost)
+    {
+        if (ghost.CurrentState == GhostStatus.State.Normal)
+        {
+            StartCoroutine(LoseLife());
+            return;
+        }
+        ghost.Die();
+        effects.PlayOneShot(ghostClip);
+        AddScore(300);
+        RefreshMusic();
     }
 
     public void CheckCherryPath(Vector3 from, Vector3 to)
