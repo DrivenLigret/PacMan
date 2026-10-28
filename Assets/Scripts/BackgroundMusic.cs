@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class BackgroundMusic : MonoBehaviour
@@ -6,17 +5,29 @@ public class BackgroundMusic : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip intro;
     [SerializeField] private AudioClip normal;
+    [SerializeField] private AudioClip scared;
+    [SerializeField] private AudioClip dead;
 
-    private IEnumerator Start()
+    public void PlayIntro()
     {
-        audioSource.clip = intro;
-        audioSource.loop = false;
-        audioSource.Play();
+        Play(intro, true);
+    }
 
-        yield return new WaitForSeconds(Mathf.Min(3f, intro.length));
+    public void SetState(bool anyDead, bool anyScared)
+    {
+        Play(anyDead ? dead : anyScared ? scared : normal, true);
+    }
 
-        audioSource.clip = normal;
-        audioSource.loop = true;
+    public void StopMusic()
+    {
+        audioSource.Stop();
+    }
+
+    private void Play(AudioClip clip, bool loop)
+    {
+        if (audioSource.clip == clip && audioSource.isPlaying && audioSource.loop == loop) return;
+        audioSource.clip = clip;
+        audioSource.loop = loop;
         audioSource.Play();
     }
 }

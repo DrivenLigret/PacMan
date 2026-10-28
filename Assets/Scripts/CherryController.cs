@@ -7,12 +7,23 @@ public class CherryController : MonoBehaviour
     [SerializeField] private SpriteRenderer cherryPrefab;
     [SerializeField] private SpriteMask mapMask;
     [SerializeField] private float speed = 3f;
+    [SerializeField] private GameSession game;
     private SpriteRenderer cherry;
     private Vector3 start;
     private Vector3 destination;
     private float distance;
     private float travelled;
     private float delay = 5f;
+    public Transform Current => cherry ? cherry.transform : null;
+
+    public void Collect()
+    {
+        if (!cherry) return;
+        cherry.gameObject.SetActive(false);
+        Destroy(cherry.gameObject);
+        cherry = null;
+        delay = 5f;
+    }
 
     private void Start()
     {
@@ -23,6 +34,11 @@ public class CherryController : MonoBehaviour
 
     private void Update()
     {
+        if (!game.IsPlaying)
+        {
+            if (game.IsCountingDown) delay = Mathf.Max(0f, delay - Time.deltaTime);
+            return;
+        }
         if (!cherry)
         {
             delay -= Time.deltaTime;
@@ -30,7 +46,10 @@ public class CherryController : MonoBehaviour
             return;
         }
         travelled += speed * Time.deltaTime;
+        Vector3 previous = cherry.transform.position;
         cherry.transform.position = Vector3.Lerp(start, destination, travelled / distance);
+        game.CheckCherryPath(previous, cherry.transform.position);
+        if (!cherry) return;
         if (travelled >= distance)
         {
             Destroy(cherry.gameObject);
