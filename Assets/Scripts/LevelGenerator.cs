@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -29,6 +30,43 @@ public class LevelGenerator : MonoBehaviour
     private bool[,,] rotations;
     private int[] rowStep = { -1, 0, 1, 0 };
     private int[] columnStep = { 0, 1, 0, -1 };
+    private readonly Dictionary<Vector2Int, GameObject> pellets = new Dictionary<Vector2Int, GameObject>();
+
+    public int Width => levelMap.GetLength(1) * 2;
+    public int Height => levelMap.GetLength(0) * 2 - 1;
+    public int RemainingPellets => pellets.Count;
+
+    public int GetTile(Vector2Int position)
+    {
+        int row = -position.y;
+        int column = position.x;
+        if (row < 0 || row >= Height || column < 0 || column >= Width) return -1;
+        if (fullMap != null) return fullMap[row, column];
+        int sourceRow = row < levelMap.GetLength(0) ? row : Height - 1 - row;
+        int sourceColumn = column < levelMap.GetLength(1) ? column : Width - 1 - column;
+        return levelMap[sourceRow, sourceColumn];
+    }
+
+    public int ConsumePellet(Vector2Int position)
+    {
+        if (!pellets.TryGetValue(position, out GameObject pellet)) return 0;
+        int tile = fullMap[-position.y, position.x];
+        pellets.Remove(position);
+        fullMap[-position.y, position.x] = 0;
+        pellet.SetActive(false);
+        Destroy(pellet);
+        return tile;
+    }
+
+    public bool TryTeleport(Vector2Int position, out Vector2Int exit)
+    {
+        exit = position;
+        if (position.y != -Height / 2 || GetTile(position) != 0) return false;
+        if (position.x == 0) exit.x = Width - 1;
+        else if (position.x == Width - 1) exit.x = 0;
+        else return false;
+        return true;
+    }
 
     private void Start()
     {
@@ -226,6 +264,8 @@ public class LevelGenerator : MonoBehaviour
                 piece.name = tiles[tile - 1].name + "_" + row + "_" + column;
                 piece.transform.localPosition = new Vector3(column, -row, 0);
                 piece.transform.localRotation = Quaternion.Euler(0, 0, -90 * GetRotation(row, column));
+                if (tile == 5 || tile == 6)
+                    pellets.Add(Vector2Int.RoundToInt(piece.transform.position), piece);
             }
         }
     }
