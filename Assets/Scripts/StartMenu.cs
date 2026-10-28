@@ -34,4 +34,9 @@ public class StartMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Level01");
     }
+
+    public void OpenLevelTwo()
+    {
+        SceneManager.LoadScene("InnovationScene");
+    }
 }
