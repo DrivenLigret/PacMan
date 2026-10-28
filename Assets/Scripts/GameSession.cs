@@ -16,6 +16,7 @@ public class GameSession : MonoBehaviour
     [SerializeField] private AudioClip cherryClip;
     [SerializeField] private AudioClip ghostClip;
     [SerializeField] private AudioClip deathClip;
+    [SerializeField] private StoredPower storedPower;
     private Phase phase;
     private int score;
     private int lives = 3;
@@ -72,9 +73,8 @@ public class GameSession : MonoBehaviour
                 AddScore(tile == 6 ? 50 : 10);
                 if (tile == 6)
                 {
-                    scaredTime = 10f;
-                    foreach (GhostStatus ghost in ghosts) ghost.ApplyScaredTime(scaredTime);
-                    RefreshMusic();
+                    if (storedPower) storedPower.Collect();
+                    else FrightenGhosts();
                 }
                 if (level.RemainingPellets == 0) { EndGame(); return; }
             }
@@ -93,6 +93,13 @@ public class GameSession : MonoBehaviour
     {
         if (IsPlaying && ghost.CurrentState != GhostStatus.State.Dead && DistanceToSegment(player.transform.position, from, to) < .55f)
             CollideWithGhost(ghost);
+    }
+
+    public void FrightenGhosts()
+    {
+        scaredTime = 10f;
+        foreach (GhostStatus ghost in ghosts) ghost.ApplyScaredTime(scaredTime);
+        RefreshMusic();
     }
 
     private void CollideWithGhost(GhostStatus ghost)
