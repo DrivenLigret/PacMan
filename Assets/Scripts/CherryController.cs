@@ -34,7 +34,11 @@ public class CherryController : MonoBehaviour
 
     private void Update()
     {
-        if (!game.IsPlaying) return;
+        if (!game.IsPlaying)
+        {
+            if (game.IsCountingDown) delay = Mathf.Max(0f, delay - Time.deltaTime);
+            return;
+        }
         if (!cherry)
         {
             delay -= Time.deltaTime;

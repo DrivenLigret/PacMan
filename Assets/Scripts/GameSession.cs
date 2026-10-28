@@ -22,6 +22,7 @@ public class GameSession : MonoBehaviour
     private float elapsed;
     private float scaredTime;
     public bool IsPlaying => phase == Phase.Playing;
+    public bool IsCountingDown => phase == Phase.Countdown;
     public float ScaredTime => scaredTime;
 
     private IEnumerator Start()

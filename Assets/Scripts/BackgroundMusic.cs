@@ -10,7 +10,7 @@ public class BackgroundMusic : MonoBehaviour
 
     public void PlayIntro()
     {
-        Play(intro, false);
+        Play(intro, true);
     }
 
     public void SetState(bool anyDead, bool anyScared)
