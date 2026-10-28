@@ -6463,6 +6463,12 @@ MonoBehaviour:
   - {fileID: 1028720204}
   dimColor: {r: 0.1, g: 0.23, b: 0.24, a: 1}
   brightColor: {r: 0.52, g: 0.9, b: 0.79, a: 1}
+  highScores:
+  - {fileID: 1647721173}
+  - {fileID: 1958472993}
+  bestTimes:
+  - {fileID: 1474301244}
+  - {fileID: 1662178192}
 --- !u!224 &1391596046
 RectTransform:
   m_ObjectHideFlags: 0
