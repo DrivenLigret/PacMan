@@ -22,6 +22,7 @@ public class PacStudentController : MonoBehaviour
     private bool moving;
     private Vector3 spawnPosition;
     private KeyCode blockedInput = KeyCode.None;
+    public float Speed => speed;
 
     private void Awake()
     {

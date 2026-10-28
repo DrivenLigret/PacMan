@@ -576,6 +576,7 @@ GameObject:
   - component: {fileID: 1843262278}
   - component: {fileID: 1843262279}
   - component: {fileID: 1843262280}
+  - component: {fileID: 1843262281}
   m_Layer: 0
   m_Name: Ghost1
   m_TagString: Untagged
@@ -692,6 +693,7 @@ GameObject:
   - component: {fileID: 3018}
   - component: {fileID: 3021}
   - component: {fileID: 316606875}
+  - component: {fileID: 316606876}
   m_Layer: 0
   m_Name: Ghost2
   m_TagString: Untagged
@@ -809,6 +811,7 @@ GameObject:
   - component: {fileID: 3022}
   - component: {fileID: 3025}
   - component: {fileID: 3029}
+  - component: {fileID: 3031}
   m_Layer: 0
   m_Name: Ghost3
   m_TagString: Untagged
@@ -925,6 +928,7 @@ GameObject:
   - component: {fileID: 3026}
   - component: {fileID: 3028}
   - component: {fileID: 3027}
+  - component: {fileID: 3030}
   m_Layer: 0
   m_Name: Ghost4
   m_TagString: Untagged
@@ -1079,6 +1083,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GhostStatus
   game: {fileID: 589918720}
   animator: {fileID: 3025}
+--- !u!114 &3030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5aa2d5f35683044f902f3a4b7e0553b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostController
+  game: {fileID: 589918720}
+  level: {fileID: 3047}
+  player: {fileID: 3017}
+  status: {fileID: 3027}
+  number: 4
+  exitCell: {x: 14, y: -17}
+--- !u!114 &3031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5aa2d5f35683044f902f3a4b7e0553b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostController
+  game: {fileID: 589918720}
+  level: {fileID: 3047}
+  player: {fileID: 3017}
+  status: {fileID: 3029}
+  number: 3
+  exitCell: {x: 14, y: -11}
 --- !u!1 &3045
 GameObject:
   m_ObjectHideFlags: 0
@@ -8139,6 +8179,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GhostStatus
   game: {fileID: 589918720}
   animator: {fileID: 3021}
+--- !u!114 &316606876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5aa2d5f35683044f902f3a4b7e0553b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostController
+  game: {fileID: 589918720}
+  level: {fileID: 3047}
+  player: {fileID: 3017}
+  status: {fileID: 316606875}
+  number: 2
+  exitCell: {x: 13, y: -17}
 --- !u!1001 &319336411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47728,6 +47786,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GhostStatus
   game: {fileID: 589918720}
   animator: {fileID: 1843262279}
+--- !u!114 &1843262281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5aa2d5f35683044f902f3a4b7e0553b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostController
+  game: {fileID: 589918720}
+  level: {fileID: 3047}
+  player: {fileID: 3017}
+  status: {fileID: 1843262280}
+  number: 1
+  exitCell: {x: 13, y: -11}
 --- !u!1001 &1843741145
 PrefabInstance:
   m_ObjectHideFlags: 0

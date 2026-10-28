@@ -6,23 +6,21 @@ public class GhostStatus : MonoBehaviour
     [SerializeField] private GameSession game;
     [SerializeField] private Animator animator;
     private Vector3 spawnPosition;
-    private float deadTime;
+    private GhostController movement;
+    private Vector2Int facing = Vector2Int.right;
     public State CurrentState { get; private set; }
+    public Vector3 SpawnPosition => spawnPosition;
 
     private void Awake()
     {
         spawnPosition = transform.position;
+        movement = GetComponent<GhostController>();
     }
 
-    private void Update()
+    public void Revive()
     {
-        if (!game.IsPlaying || CurrentState != State.Dead) return;
-        deadTime -= Time.deltaTime;
-        if (deadTime <= 0f)
-        {
-            SetState(game.ScaredTime > 3f ? State.Scared : game.ScaredTime > 0f ? State.Recovering : State.Normal);
-            game.RefreshMusic();
-        }
+        SetState(game.ScaredTime > 3f ? State.Scared : game.ScaredTime > 0f ? State.Recovering : State.Normal);
+        game.RefreshMusic();
     }
 
     public void ApplyScaredTime(float time)
@@ -33,14 +31,14 @@ public class GhostStatus : MonoBehaviour
 
     public void Die()
     {
-        deadTime = 3f;
         SetState(State.Dead);
     }
 
     public void ResetGhost()
     {
         transform.position = spawnPosition;
-        deadTime = 0f;
+        movement.ResetMovement();
+        facing = Vector2Int.right;
         CurrentState = State.Dead;
         SetState(State.Normal);
     }
@@ -50,12 +48,26 @@ public class GhostStatus : MonoBehaviour
         animator.speed = value ? 0f : 1f;
     }
 
+    public void Face(Vector2Int direction)
+    {
+        if (facing == direction) return;
+        facing = direction;
+        if (CurrentState == State.Normal || CurrentState == State.Scared) PlayAnimation();
+    }
+
     private void SetState(State value)
     {
         if (CurrentState == value) return;
         CurrentState = value;
         animator.enabled = true;
         animator.speed = 1f;
-        animator.Play(value == State.Normal ? "WalkRight" : value.ToString(), 0, 0f);
+        PlayAnimation();
+    }
+
+    private void PlayAnimation()
+    {
+        string direction = facing == Vector2Int.up ? "Up" : facing == Vector2Int.down ? "Down" : facing == Vector2Int.left ? "Left" : "Right";
+        string state = CurrentState == State.Normal ? "Walk" + direction : CurrentState == State.Scared ? "Scared" + direction : CurrentState.ToString();
+        animator.Play(state, 0, 0f);
     }
 }
